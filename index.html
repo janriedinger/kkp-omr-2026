@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KKP × OMR 2026 — Reisegruppe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #2b323d;
+      color: #fff;
+      font-family: Inter, -apple-system, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ───────────────────────────────────────── */
+    header {
+      background: #252b36;
+      border-bottom: 1px solid #4a5568;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header img { height: 28px; }
+    .header-divider { width: 1px; height: 24px; background: #4a5568; }
+    .header-title { font-size: 15px; font-weight: 700; color: #fff; }
+    .header-badge {
+      margin-left: auto;
+      background: linear-gradient(135deg, #ff4169, #ff6b8a);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, rgba(255,65,105,0.15), rgba(255,65,105,0.03));
+      border-bottom: 1px solid rgba(255,65,105,0.2);
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      color: #ff4169;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .hero-sub {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .hero-dates {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .date-chip {
+      background: #343d4c;
+      border: 1px solid #4a5568;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .date-chip span { color: #ff4169; }
+
+    /* ── LAYOUT ───────────────────────────────────────── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* ── SECTION LABEL ────────────────────────────────── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #ff4169;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,65,105,0.2);
+    }
+
+    /* ── CARD ─────────────────────────────────────────── */
+    .card {
+      background: #343d4c;
+      border: 1px solid #4a5568;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .card-sub { font-size: 12px; color: #94a3b8; margin-bottom: 16px; }
+
+    /* ── HOTEL ────────────────────────────────────────── */
+    .hotel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .hotel-info-block {
+      background: #3d4757;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .hotel-info-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .hotel-info-value { font-size: 13px; font-weight: 600; color: #fff; }
+    .hotel-info-detail { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+    .hotel-link {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    .hotel-link:hover { color: #93c5fd; }
+
+    /* ── FAHRGEMEINSCHAFT ─────────────────────────────── */
+    .fahrt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 620px) { .fahrt-grid { grid-template-columns: 1fr; } }
+
+    .fahrt-card {
+      background: #3d4757;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .fahrt-direction {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .fahrt-direction.hin { color: #4ade80; }
+    .fahrt-direction.rueck { color: #fbbf24; }
+
+    .fahrt-meta {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .fahrt-group { margin-bottom: 12px; }
+    .fahrt-group:last-child { margin-bottom: 0; }
+    .fahrt-group-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .person-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .person-chip {
+      background: #2b323d;
+      border: 1px solid #4a5568;
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .driver-icon {
+      font-size: 9px;
+      background: #ff4169;
+      color: #fff;
+      border-radius: 3px;
+      padding: 1px 4px;
+      font-weight: 700;
+    }
+
+    /* ── TIMELINE ─────────────────────────────────────── */
+    .timeline { display: flex; flex-direction: column; }
+    .timeline-item { display: flex; gap: 16px; position: relative; }
+    .timeline-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 40px;
+      flex-shrink: 0;
+    }
+    .timeline-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .timeline-dot.party   { background: rgba(255,65,105,0.2); border: 1px solid rgba(255,65,105,0.4); }
+    .timeline-dot.mc      { background: rgba(96,165,250,0.2); border: 1px solid rgba(96,165,250,0.4); }
+    .timeline-dot.omr     { background: rgba(74,222,128,0.2); border: 1px solid rgba(74,222,128,0.4); }
+    .timeline-dot.food    { background: rgba(251,191,36,0.2); border: 1px solid rgba(251,191,36,0.4); }
+    .timeline-dot.travel  { background: rgba(148,163,184,0.15); border: 1px solid #4a5568; }
+    .timeline-dot.event   { background: rgba(255,65,105,0.12); border: 1px solid rgba(255,65,105,0.3); }
+
+    .timeline-line {
+      width: 1px;
+      flex: 1;
+      min-height: 12px;
+      background: linear-gradient(to bottom, #4a5568, transparent);
+    }
+    .timeline-item:last-child .timeline-line { display: none; }
+
+    .timeline-content { padding: 2px 0 22px; flex: 1; }
+    .timeline-day-header {
+      font-size: 11px;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0;
+    }
+    .timeline-event-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .timeline-event-desc  { font-size: 12px; color: #94a3b8; line-height: 1.5; }
+    .timeline-event-meta  { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .meta-chip {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .meta-chip.time     { background: rgba(96,165,250,0.12); color: #60a5fa; }
+    .meta-chip.location { background: rgba(74,222,128,0.12); color: #4ade80; }
+    .meta-chip.dress    { background: rgba(251,191,36,0.12); color: #fbbf24; }
+    .meta-chip.ticket   { background: rgba(255,65,105,0.12); color: #ff6b8a; }
+    .meta-chip.who      { background: rgba(148,163,184,0.1); color: #94a3b8; }
+
+    /* Day separator */
+    .day-separator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 18px;
+      grid-column: 1/-1;
+    }
+    .day-sep-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #ff4169;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .day-sep-line { flex: 1; height: 1px; background: rgba(255,65,105,0.15); }
+
+    /* ── HINWEISE ─────────────────────────────────────── */
+    .hinweise-list { display: flex; flex-direction: column; gap: 10px; }
+    .hinweis-item {
+      background: #3d4757;
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .hinweis-item.highlight { border-left: 3px solid #ff4169; }
+    .hinweis-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .hinweis-text strong { font-size: 13px; font-weight: 600; color: #fff; display: block; margin-bottom: 2px; }
+    .hinweis-text span   { font-size: 12px; color: #94a3b8; }
+
+    /* ── FAQ ──────────────────────────────────────────── */
+    .faq-banner {
+      background: rgba(96,165,250,0.08);
+      border: 1px solid rgba(96,165,250,0.2);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .faq-banner-text { font-size: 12px; color: #94a3b8; }
+    .faq-banner-text strong { color: #60a5fa; }
+    .faq-banner a {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #ff4169, #ff6b8a);
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .faq-banner a:hover { opacity: 0.85; }
+
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    .faq-item { background: #3d4757; border-radius: 10px; overflow: hidden; }
+    .faq-question {
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .faq-question:hover { background: #454f61; }
+    .faq-question.open { color: #ff6b8a; }
+    .faq-chevron { font-size: 10px; color: #64748b; transition: transform 0.2s; flex-shrink: 0; }
+    .faq-question.open .faq-chevron { transform: rotate(180deg); color: #ff4169; }
+    .faq-answer {
+      display: none;
+      padding: 12px 16px 14px;
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.6;
+      border-top: 1px solid #4a5568;
+    }
+    .faq-answer.open { display: block; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      background: #252b36;
+      border-top: 1px solid #4a5568;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    footer p { font-size: 11px; color: #64748b; }
+    footer a { color: #94a3b8; text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    /* ── COUNTDOWN ────────────────────────────────────── */
+    .countdown-bar {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .countdown-unit {
+      background: #252b36;
+      border: 1px solid rgba(255,65,105,0.3);
+      border-radius: 10px;
+      padding: 10px 16px;
+      text-align: center;
+      min-width: 64px;
+    }
+    .countdown-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ff4169;
+      line-height: 1;
+      display: block;
+    }
+    .countdown-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+      display: block;
+    }
+    .countdown-done {
+      font-size: 20px;
+      font-weight: 800;
+      color: #4ade80;
+    }
+
+    /* ── QUICK LINKS ──────────────────────────────────── */
+    .quicklinks {
+      background: #252b36;
+      border-bottom: 1px solid #4a5568;
+      padding: 10px 24px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      overflow-x: auto;
+    }
+    .quicklink {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #343d4c;
+      border: 1px solid #4a5568;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .quicklink:hover { color: #fff; border-color: #ff4169; }
+
+    /* ── COPY BUTTON ──────────────────────────────────── */
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: 1px solid #4a5568;
+      border-radius: 5px;
+      color: #64748b;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-left: 6px;
+      vertical-align: middle;
+      font-family: inherit;
+    }
+    .copy-btn:hover { color: #fff; border-color: #94a3b8; }
+    .copy-btn.copied { color: #4ade80; border-color: #4ade80; }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 24px; }
+      .container { padding: 20px 16px 48px; }
+      header { padding: 12px 16px; }
+      .quicklinks { padding: 10px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="https://tools.koschklinkperformance.de/kkp-pulse/kkp-logo-white.png" alt="KKP">
+    <div class="header-divider"></div>
+    <div class="header-title">OMR 2026 — Reisegruppe</div>
+    <div class="header-badge">Intern</div>
+  </header>
+
+  <!-- QUICK LINKS -->
+  <div class="quicklinks">
+    <a class="quicklink" href="https://www.empire-riverside.de/" target="_blank">🏨 Hotel Website</a>
+    <a class="quicklink" href="https://maps.app.goo.gl/GnrFf9DM8WgM49Pf8" target="_blank">🍽️ Com Nieu 21</a>
+    <a class="quicklink" href="https://maps.app.goo.gl/fvVHrMhDFaxWi5PCA" target="_blank">🎉 Efi-Bar</a>
+    <a class="quicklink" href="https://share.google/Cdks3oFW2LaaCzXSe" target="_blank">🍷 Restaurant Port</a>
+    <a class="quicklink" href="https://omr.com/de/festival/faq" target="_blank">❓ OMR FAQ</a>
+    <a class="quicklink" href="https://omr.com" target="_blank">🎸 omr.com</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">KKP × OMR Festival 2026</div>
+    <h1>Hamburg, let's go! 🚀</h1>
+    <div class="hero-sub">Alles Wichtige für unsere Agentur-Reise auf einen Blick.</div>
+    <div class="hero-dates">
+      <div class="date-chip"><span>📅</span> OMR Festival: <strong>5.–6. Mai 2026</strong></div>
+      <div class="date-chip"><span>🏨</span> Hotel: <strong>4.–7. Mai 2026</strong></div>
+      <div class="date-chip"><span>👥</span> Team: <strong>10 Personen</strong></div>
+    </div>
+    <div class="countdown-bar" id="countdown"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- HOTEL -->
+    <div>
+      <div class="section-label">🏨 Hotel</div>
+      <div class="card">
+        <div class="card-title">Empire Riverside Hotel</div>
+        <div class="card-sub">Bernhard-Nocht-Str. 97 · 20359 Hamburg · Nähe Reeperbahn &amp; Hafen <button class="copy-btn" onclick="copyText('Bernhard-Nocht-Str. 97, 20359 Hamburg', this)">📋 Adresse kopieren</button></div>
+        <div class="hotel-grid">
+          <div class="hotel-info-block">
+            <div class="hotel-info-label">Check-in</div>
+            <div class="hotel-info-value">Mo, 4. Mai</div>
+            <div class="hotel-info-detail">ab 15:00 Uhr</div>
+          </div>
+          <div class="hotel-info-block">
+            <div class="hotel-info-label">Check-out</div>
+            <div class="hotel-info-value">Do, 7. Mai</div>
+            <div class="hotel-info-detail">bis 12:00 Uhr</div>
+          </div>
+          <div class="hotel-info-block">
+            <div class="hotel-info-label">Buchung unter</div>
+            <div class="hotel-info-value">KKP – Koschklink Performance</div>
+            <div class="hotel-info-detail">Details folgen</div>
+          </div>
+          <div class="hotel-info-block">
+            <div class="hotel-info-label">Highlight</div>
+            <div class="hotel-info-value">Skyline Bar im 20. OG</div>
+            <div class="hotel-info-detail">Unser Pre-Party Spot ✨</div>
+          </div>
+        </div>
+        <a class="hotel-link" href="https://www.empire-riverside.de/" target="_blank">🌐 empire-riverside.de →</a>
+      </div>
+    </div>
+
+    <!-- FAHRGEMEINSCHAFTEN -->
+    <div>
+      <div class="section-label">🚗 Anreise &amp; Gruppen</div>
+      <div class="fahrt-grid">
+
+        <div class="card">
+          <div class="fahrt-direction hin">▲ Hinfahrt — Mo, 4. Mai</div>
+          <div class="fahrt-meta">
+            <span>Details per WhatsApp-Gruppe</span>
+          </div>
+
+          <div class="fahrt-group">
+            <div class="fahrt-group-label">🚗 Auto — ab Saarbrücken</div>
+            <div class="person-list">
+              <div class="person-chip"><span class="driver-icon">Fahrer</span> Artur</div>
+              <div class="person-chip">Eugen</div>
+              <div class="person-chip">Jan</div>
+            </div>
+          </div>
+
+          <div class="fahrt-group">
+            <div class="fahrt-group-label">🚆 Zug</div>
+            <div class="person-list">
+              <div class="person-chip">Sandra</div>
+              <div class="person-chip">Tina</div>
+              <div class="person-chip">Tine</div>
+              <div class="person-chip">Sarah</div>
+              <div class="person-chip">Sophie</div>
+            </div>
+          </div>
+
+          <div class="fahrt-group">
+            <div class="fahrt-group-label">✈️ Direkt aus London</div>
+            <div class="person-list">
+              <div class="person-chip">Cindy</div>
+              <div class="person-chip">Hannah</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="fahrt-direction rueck">▼ Rückfahrt — Do, 7. Mai</div>
+          <div class="fahrt-meta">
+            <span>Individuell wie Anreise · Check-out bis 12:00 Uhr</span>
+          </div>
+
+          <div class="fahrt-group">
+            <div class="fahrt-group-label">🚗 Auto — zurück nach Saarbrücken</div>
+            <div class="person-list">
+              <div class="person-chip"><span class="driver-icon">Fahrer</span> Artur</div>
+              <div class="person-chip">Eugen</div>
+              <div class="person-chip">Jan</div>
+            </div>
+          </div>
+
+          <div class="fahrt-group">
+            <div class="fahrt-group-label">🚆 Zug</div>
+            <div class="person-list">
+              <div class="person-chip">Sandra</div>
+              <div class="person-chip">Tina</div>
+              <div class="person-chip">Tine</div>
+              <div class="person-chip">Sarah</div>
+              <div class="person-chip">Sophie</div>
+            </div>
+          </div>
+
+          <div class="fahrt-group">
+            <div class="fahrt-group-label">🚗🚆 Zug oder Auto nach SB</div>
+            <div class="person-list">
+              <div class="person-chip">Cindy</div>
+              <div class="person-chip">Hannah</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROGRAMM -->
+    <div>
+      <div class="section-label">📅 Programm &amp; Termine</div>
+      <div class="card">
+        <div class="timeline">
+
+          <!-- MONTAG -->
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot travel">🚗</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-day-header">Montag, 4. Mai</div>
+              <div class="timeline-event-title">Anreise Hamburg</div>
+              <div class="timeline-event-desc">Jede Gruppe reist individuell an — Hotel Check-in ab 15:00 Uhr. Gepäck ggf. vorher an der Rezeption abgeben.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip location">📍 Empire Riverside Hotel</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot food">🍽️</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event-title">Abendessen — Com Nieu 21</div>
+              <div class="timeline-event-desc">Gemeinsames Abendessen zum Ankommen.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip time">⏰ 18:00 Uhr</span>
+                <span class="meta-chip location"><a href="https://maps.app.goo.gl/GnrFf9DM8WgM49Pf8" target="_blank" style="color:inherit;text-decoration:none;">📍 Com Nieu 21 auf Maps →</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot party">🥂</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event-title">KKP Pre-Party — Skyline Bar</div>
+              <div class="timeline-event-desc">Unser eigener Warm-up im 20. Stock mit Blick über Hamburg — gemeinsam mit einigen unserer Bestands- und ehemaligen Kunden. Der perfekte Einstieg ins OMR-Wochenende.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip time">⏰ 20:00 Uhr</span>
+                <span class="meta-chip location">📍 Skyline Bar, Empire Riverside (20. OG)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DIENSTAG -->
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot mc">🎓</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-day-header">Dienstag, 5. Mai — OMR Tag 1</div>
+              <div class="timeline-event-title">Masterclass: GEO &amp; GEA — Growth-Hebel oder Hype?</div>
+              <div class="timeline-event-desc">Auswirkungen auf Budget &amp; ROI in der Finanzbranche.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip time">⏰ 10:30 Uhr</span>
+                <span class="meta-chip who">👤 Cindy &amp; Artur</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot omr">🎸</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event-title">OMR Festival — Stages &amp; Expo</div>
+              <div class="timeline-event-desc">Stages, Keynotes, Expo-Bereich erkunden. Individuelle Planung, abends gemeinsam.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip time">⏰ 09:00 – 19:00 Uhr</span>
+                <span class="meta-chip location">📍 Hamburger Messe &amp; CCH</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot event">🎉</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event-title">Side-Event — Efi-Bar</div>
+              <div class="timeline-event-desc">Abend-Side-Event in der Efi-Bar. Details folgen.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip time">⏰ TBD</span>
+                <span class="meta-chip location"><a href="https://maps.app.goo.gl/fvVHrMhDFaxWi5PCA" target="_blank" style="color:inherit;text-decoration:none;">📍 Efi-Bar auf Maps →</a></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MITTWOCH -->
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot omr">🎸</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-day-header">Mittwoch, 6. Mai — OMR Tag 2</div>
+              <div class="timeline-event-title">OMR Festival — Individuelle Teilnahme</div>
+              <div class="timeline-event-desc">Jeder plant seinen Tag selbst — Stages, Networking, Expo nach Interesse.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip time">⏰ 09:00 – 19:00 Uhr</span>
+                <span class="meta-chip location">📍 Hamburger Messe &amp; CCH</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot food">🍽️</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event-title">Gemeinsames Abendessen — Restaurant Port</div>
+              <div class="timeline-event-desc">Gemeinsamer Abschluss des Festival-Tages.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip time">⏰ 20:00 Uhr</span>
+                <span class="meta-chip location"><a href="https://share.google/Cdks3oFW2LaaCzXSe" target="_blank" style="color:inherit;text-decoration:none;">📍 Restaurant Port auf Maps →</a></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DONNERSTAG -->
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot travel">🚗</div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-day-header">Donnerstag, 7. Mai</div>
+              <div class="timeline-event-title">Abreise — individuell</div>
+              <div class="timeline-event-desc">Check-out bis 12:00 Uhr. Jede Gruppe reist individuell ab — gleiche Aufteilung wie Anreise.</div>
+              <div class="timeline-event-meta">
+                <span class="meta-chip time">⏰ Check-out bis 12:00 Uhr</span>
+                <span class="meta-chip location">📍 Treffpunkt Hotel Lobby</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- BESONDERHEITEN -->
+    <div>
+      <div class="section-label">⭐ Besonderheiten &amp; Hinweise</div>
+      <div class="card">
+        <div class="hinweise-list">
+
+          <div class="hinweis-item highlight">
+            <div class="hinweis-icon">♻️</div>
+            <div class="hinweis-text">
+              <strong>Pfandsystem — Wichtig!</strong>
+              <span>Auf dem OMR-Gelände gibt es ein Pfandsystem. Jede Person ist selbst dafür verantwortlich, ihren gekauften Pfand zurückzugeben. Es gibt keine interne Verrechnung oder Sammelrückgabe — bitte selbst dran denken!</span>
+            </div>
+          </div>
+
+          <div class="hinweis-item highlight" style="border-left-color: #fbbf24; background: rgba(251,191,36,0.07);">
+            <div class="hinweis-icon">🎫</div>
+            <div class="hinweis-text">
+              <strong style="color: #fbbf24;">Akkreditierung — unbedingt einplanen!</strong>
+              <span>Jede Person muss sich <strong style="color:#fff;">vor dem Betreten des Geländes</strong> eigenständig mit ihrem Ticket akkreditieren und ihr Badge abholen. Am <strong style="color:#fff;">Dienstagmorgen (5. Mai)</strong> bitte ausreichend Zeit dafür einplanen — Warteschlangen möglich! Aktuelle Infos zum Check-in-Ablauf: <a href="https://omr.com/de/festival/faq" target="_blank" style="color:#60a5fa;">omr.com/de/festival/faq</a></span>
+            </div>
+          </div>
+
+          <div class="hinweis-item">
+            <div class="hinweis-icon">🧾</div>
+            <div class="hinweis-text">
+              <strong>Abrechnung — geschlossenes System</strong>
+              <span>Die Getränke- und Verpflegungsabrechnung läuft über ein geschlossenes Chip-System. Nach dem Event erhält jede Person automatisch eine Rechnung per E-Mail. Diese bitte eigenständig in Abstimmung mit der Buchhaltung begleichen oder weiterleiten.</span>
+            </div>
+          </div>
+
+          <div class="hinweis-item">
+            <div class="hinweis-icon">🚕</div>
+            <div class="hinweis-text">
+              <strong>Transport Hotel → Messegelände</strong>
+              <span>Die Fahrten zum Gelände organisieren wir gemeinsam in Gruppen — einfach Uber oder Taxi direkt vor dem Hotel bestellen. Bitte kurz in der Gruppe abstimmen, wer wann losfährt, damit sich niemand alleine durchschlägt.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div>
+      <div class="section-label">❓ FAQ — Häufige Fragen</div>
+      <div class="card">
+
+        <div class="faq-banner">
+          <div class="faq-banner-text">
+            <strong>Offizielle OMR FAQ-Seite</strong><br>
+            Alle aktuellen Infos zu Ticket-Check-in, Badge, Einlass &amp; mehr direkt von OMR.
+          </div>
+          <a href="https://omr.com/de/festival/faq" target="_blank">Zu den offiziellen FAQs →</a>
+        </div>
+
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Wie komme ich aufs Messegelände?
+              <span class="faq-chevron">▼</span>
+            </div>
+            <div class="faq-answer">
+              Das OMR Festival findet auf dem Hamburger Messegelände (Eingang Messe Hamburg Nord) und im CCH statt. Mit dem HVV: U2 Haltestelle Messehallen oder Stephansplatz. Wir empfehlen öffentliche Verkehrsmittel oder Uber — Parkplätze sind knapp und teuer.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Wo hole ich mein Badge / Bändchen ab?
+              <span class="faq-chevron">▼</span>
+            </div>
+            <div class="faq-answer">
+              Die genauen Check-in Punkte und Badge-Abholung bitte auf der offiziellen OMR FAQ-Seite nachlesen (Link oben). Die Infos werden kurz vor dem Festival aktualisiert. In der Regel gibt es gesonderte Einlassbereiche für Festival- und Masterclass-Tickets.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Was ist mit dem Festival-Ticket alles inklusive?
+              <span class="faq-chevron">▼</span>
+            </div>
+            <div class="faq-answer">
+              Das Festival-Ticket gibt Zugang zu allen kostenlosen Stages, dem Expo-Bereich und den abendlichen Festival-Events. Masterclasses sind separat und erfordern ein eigenes Ticket. Bitte vorab prüfen, ob Masterclass-Plätze gebucht sind.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Wie funktioniert das Pfandsystem?
+              <span class="faq-chevron">▼</span>
+            </div>
+            <div class="faq-answer">
+              Auf dem Gelände gibt es Pfandbecher und -flaschen. Pfand wird beim Kauf erhoben und bei Rückgabe am Pfandstand zurückerstattet. Wichtig: Jede Person gibt ihren eigenen Pfand selbst zurück — keine interne Sammelrückgabe im Team!
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Kann ich Tickets übertragen oder umschreiben?
+              <span class="faq-chevron">▼</span>
+            </div>
+            <div class="faq-answer">
+              Tickets sind in der Regel personalisiert und nicht übertragbar. Bitte vor der Reise sicherstellen, dass alle Tickets auf die richtige Person ausgestellt sind. Bei Problemen direkt den OMR Support kontaktieren.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              Was soll ich einpacken?
+              <span class="faq-chevron">▼</span>
+            </div>
+            <div class="faq-answer">
+              Empfehlung: Bequeme Schuhe (sehr viel Laufen!), wetterfeste Kleidung (Hamburg kann wechselhaft sein), Ladekabel &amp; Powerbank, Festival-Ticket auf dem Handy, Regenponcho als Backup, ggf. Notizbuch oder Laptop für Masterclasses.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>KKP — Koschklink Performance · OMR Festival 2026 · Intern &nbsp;·&nbsp; <a href="https://omr.com" target="_blank">omr.com</a> &nbsp;·&nbsp; <a href="https://www.empire-riverside.de/" target="_blank">Hotel</a></p>
+  </footer>
+
+  <script>
+    // ── FAQ ────────────────────────────────────────────
+    function toggleFaq(el) {
+      const answer = el.nextElementSibling;
+      const isOpen = answer.classList.contains('open');
+      document.querySelectorAll('.faq-answer.open').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-question.open').forEach(q => q.classList.remove('open'));
+      if (!isOpen) {
+        answer.classList.add('open');
+        el.classList.add('open');
+      }
+    }
+
+    // ── COPY ───────────────────────────────────────────
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = '✓ Kopiert!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = '📋 Adresse kopieren';
+        }, 2000);
+      });
+    }
+
+    // ── COUNTDOWN ──────────────────────────────────────
+    function updateCountdown() {
+      const target = new Date('2026-05-05T09:00:00');
+      const now = new Date();
+      const diff = target - now;
+      const el = document.getElementById('countdown');
+      if (!el) return;
+
+      if (diff <= 0) {
+        el.innerHTML = '<div class="countdown-unit"><span class="countdown-done">🎸 Es ist OMR-Zeit!</span></div>';
+        return;
+      }
+
+      const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      el.innerHTML = `
+        <div class="countdown-unit"><span class="countdown-value">${days}</span><span class="countdown-label">Tage</span></div>
+        <div class="countdown-unit"><span class="countdown-value">${String(hours).padStart(2,'0')}</span><span class="countdown-label">Stunden</span></div>
+        <div class="countdown-unit"><span class="countdown-value">${String(minutes).padStart(2,'0')}</span><span class="countdown-label">Minuten</span></div>
+        <div class="countdown-unit"><span class="countdown-value">${String(seconds).padStart(2,'0')}</span><span class="countdown-label">Sekunden</span></div>
+      `;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>
